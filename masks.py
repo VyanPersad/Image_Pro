@@ -1,19 +1,28 @@
 import numpy as np
 import cv2
 
-def shadowMsk(image):
+#These functions return an image
+
+lower_array = []
+upper_array = []
+
+def shadowMsk(image, lower_array, upper_array):
     #Shadow Mask
+    #0,0,0
+    #180, 50,15
     converted_c = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
-    lshad = np.array([0, 0, 0], dtype="uint8")
-    ushad = np.array([180, 50, 15], dtype="uint8")
+    lshad = np.array(lower_array, dtype="uint8")
+    ushad = np.array(upper_array, dtype="uint8")
     shadow_mask = cv2.inRange(converted_c, lshad, ushad)
     #This should show the shadowed region with a green tint.
     img_w_shadow_highlight = cv2.bitwise_and(converted_c, converted_c, mask=~shadow_mask)
     return img_w_shadow_highlight
 
-def HSVskinMask(image):
-    lower = np.array([3, 15, 10], dtype="uint8")
-    upper = np.array([20, 255, 255], dtype="uint8")
+def HSVskinMask(image,lower_array, upper_array):
+    #3,15,10
+    #20,255,255
+    lower = np.array(lower_array, dtype="uint8")
+    upper = np.array(upper_array, dtype="uint8")
 
     converted = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
     skinMask = cv2.inRange(converted, lower, upper)
@@ -54,9 +63,12 @@ def HSVskinMask(image):
 
     return largest_contour_image
 
-def YCbCrskinMask(image):
-    lower = np.array([0, 138, 67], dtype="uint8")
-    upper = np.array([255, 173, 133], dtype="uint8")
+def YCbCrskinMask(image,lower_array, upper_array):
+    #0,138,67
+    #255,173,133
+
+    lower = np.array(lower_array, dtype="uint8")
+    upper = np.array(upper_array, dtype="uint8")
 
     converted = cv2.cvtColor(image, cv2.COLOR_BGR2YCrCb)
     skinMask = cv2.inRange(converted, lower, upper)

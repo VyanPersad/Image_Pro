@@ -6,7 +6,7 @@ import cv2
 #represents the individual file the loop will iterate through
 #where the file path is path to the file without the quotation marks
 #do not inlude the trailing forward slash
-filepath = None
+
 img_Array = []
 
 def readFromFile(filepath, increment):
@@ -16,7 +16,7 @@ def readFromFile(filepath, increment):
     args = vars(ap.parse_args())
     image = cv2.imread(args["image"])    
     #Outputs a 300 x 300 px image
-    image = cv2.resize(image, (300, 300))
+    #image = cv2.resize(image, (300, 300))
     return image 
 
 def img_array(filepath):
